@@ -1,1 +1,503 @@
-01000111 01001001 01011010 01111011 01100001 01100011 00101101 01101011 01100001 01110000 01101001 01111001 01101001 00101101 01100001 01110010 01100001 01110011 00101101 01101011 01100001 01110010 01100111 01101111 00101101 01100110 01100001 01101011 01100101 00101101 01100110 01101100 01100001 01100111 00101101 01100111 01100101 01110100 01101001 01110010 01100100 01101001 01101011 01111101
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YUSİBER – Tişört & Logo Tasarımları</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050a0e;
+            --bg2: #090f14;
+            --accent: #00ffe7;
+            --accent2: #0077ff;
+            --danger: #ff003c;
+            --text: #c8e6f0;
+            --muted: #3a5a6a;
+            --card-bg: rgba(0, 255, 231, 0.04);
+            --border: rgba(0, 255, 231, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Exo 2', sans-serif;
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.08) 2px,
+                rgba(0,0,0,0.08) 4px
+            );
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        #matrix {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            opacity: 0.07;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ── Nav ── */
+        nav {
+            position: fixed; top: 0; width: 100%;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 18px 48px;
+            background: rgba(5,10,14,0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+        }
+        .nav-logo {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            font-size: 1.4rem;
+            color: var(--accent);
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px var(--accent);
+        }
+        .nav-logo span { color: var(--accent2); }
+        .nav-tag {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--muted);
+            letter-spacing: 2px;
+        }
+
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            text-align: center;
+            padding: 120px 24px 80px;
+            z-index: 1;
+        }
+
+        .hero-eyebrow {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 6px;
+            color: var(--accent2);
+            margin-bottom: 24px;
+            animation: fadeDown 0.8s ease both;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2.8rem, 8vw, 6.5rem);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            animation: fadeDown 0.9s ease both;
+            animation-delay: 0.1s;
+        }
+        .hero-title .line1 { display: block; color: #fff; }
+        .hero-title .line2 {
+            display: block;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 30px var(--accent));
+        }
+
+        .hero-sub {
+            font-size: 1.05rem;
+            color: var(--muted);
+            font-weight: 300;
+            letter-spacing: 1px;
+            max-width: 480px;
+            margin: 24px auto 0;
+            animation: fadeDown 1s ease both;
+            animation-delay: 0.25s;
+        }
+
+        .hero-title:hover .line2 {
+            animation: glitch 0.3s steps(2) forwards;
+        }
+        @keyframes glitch {
+            0%   { transform: translate(0); }
+            20%  { transform: translate(-3px, 1px); }
+            40%  { transform: translate(3px, -1px); }
+            60%  { transform: translate(-2px, 2px); }
+            80%  { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        /* ── Status badge ── */
+        .status-wrap {
+            margin-top: 52px;
+            animation: fadeDown 1.1s ease both;
+            animation-delay: 0.4s;
+        }
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 12px;
+            padding: 14px 32px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 2px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            color: var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+        .status-badge::before {
+            content: '';
+            position: absolute; left: 0; top: 0; bottom: 0;
+            width: 3px;
+            background: var(--accent);
+            box-shadow: 0 0 12px var(--accent);
+        }
+        .pulse-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+            animation: pulse 1.4s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%       { opacity: 0.4; transform: scale(0.7); }
+        }
+
+        /* ── Countdown ── */
+        .countdown-section {
+            position: relative; z-index: 1;
+            padding: 40px 24px 100px;
+            text-align: center;
+        }
+        .countdown-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 5px;
+            color: var(--muted);
+            margin-bottom: 32px;
+            text-transform: uppercase;
+        }
+        .countdown {
+            display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+        }
+        .count-item {
+            display: flex; flex-direction: column; align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 24px 32px;
+            min-width: 100px;
+            position: relative;
+        }
+        .count-item::after {
+            content: '';
+            position: absolute; bottom: -1px; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .count-item:hover::after { opacity: 1; }
+        .count-num {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-shadow: 0 0 20px rgba(0,255,231,0.4);
+            line-height: 1;
+        }
+        .count-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            color: var(--muted);
+            margin-top: 8px;
+        }
+
+        /* ── Info Cards ── */
+        .cards-section {
+            position: relative; z-index: 1;
+            padding: 0 24px 100px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 5px;
+            color: var(--accent2);
+            margin-bottom: 40px;
+            display: flex; align-items: center; gap: 16px;
+        }
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border), transparent);
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 32px 28px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+        .card:hover { border-color: rgba(0,255,231,0.4); transform: translateY(-4px); }
+        .card:hover::before { transform: scaleX(1); }
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 8px var(--accent));
+        }
+        .card-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        .card-body {
+            font-size: 0.88rem;
+            color: var(--muted);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .cta-section {
+            position: relative; z-index: 1;
+            text-align: center;
+            padding: 0 24px 120px;
+        }
+        .cta-box {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-box::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(0,255,231,0.06) 0%, transparent 70%);
+        }
+        .cta-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+        .cta-title span { color: var(--accent); }
+        .cta-sub {
+            font-size: 0.88rem;
+            color: var(--muted);
+            margin-bottom: 36px;
+            line-height: 1.7;
+        }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 16px 40px;
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.25s, box-shadow 0.25s, color 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary:hover {
+            background: var(--accent);
+            color: #050a0e;
+            box-shadow: 0 0 30px rgba(0,255,231,0.4);
+        }
+        .btn-primary::after {
+            content: '→';
+            transition: transform 0.2s;
+        }
+        .btn-primary:hover::after { transform: translateX(4px); }
+
+        footer {
+            position: relative; z-index: 1;
+            border-top: 1px solid var(--border);
+            padding: 32px 48px;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 16px;
+        }
+        .footer-logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            font-weight: 900;
+            color: var(--accent);
+            letter-spacing: 3px;
+        }
+        .footer-copy {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--muted);
+            letter-spacing: 2px;
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            nav { padding: 14px 20px; }
+            .hero { padding: 100px 16px 60px; }
+            footer { padding: 24px 20px; flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<nav>
+    <div class="nav-logo">YU<span>Sİ</span>BER</div>
+    <div class="nav-tag">// SİBER GÜVENLİK KULÜBÜ</div>
+</nav>
+
+<section class="hero">
+    <div class="hero-eyebrow">YUSİBER x MERCH — 2025</div>
+    <h1 class="hero-title">
+        <span class="line1">KULÜP</span>
+        <span class="line2">TİŞÖRTLERİ</span>
+    </h1>
+    <p class="hero-sub">Tasarımlar onay aşamasında. Çok yakında sınırlı sayıda üretilecek.</p>
+    <div class="status-wrap">
+        <div class="status-badge">
+            <div class="pulse-dot"></div>
+            ONAY AŞAMASINDA
+        </div>
+    </div>
+</section>
+
+
+<section class="countdown-section">
+    <div class="countdown-label">// Lansmana Kalan Süre</div>
+    <div class="countdown">
+        <div class="count-item"><span class="count-num" id="days">00</span><span class="count-label">GÜN</span></div>
+        <div class="count-item"><span class="count-num" id="hours">00</span><span class="count-label">SAAT</span></div>
+        <div class="count-item"><span class="count-num" id="mins">00</span><span class="count-label">DAKİKA</span></div>
+        <div class="count-item"><span class="count-num" id="secs">00</span><span class="count-label">SANİYE</span></div>
+    </div>
+</section>
+
+
+<section class="cards-section">
+    <div class="section-title">// NELER SUNUYORUZ</div>
+    <div class="cards">
+        <div class="card">
+            <div class="card-icon">👕</div>
+            <div class="card-title">ÖZEL TASARIM</div>
+            <div class="card-body">Kulübe özel, sıfırdan tasarlanan grafikler. Her desen YUSİBER kimliğini yansıtıyor.</div>
+        </div>
+        <div class="card">
+            <div class="card-icon">🔒</div>
+            <div class="card-title">SİNİRLİ ÜRETİM</div>
+            <div class="card-body">Yalnızca sınırlı adet üretilecek. Erken destek verenlerin öncelik hakkı olacak.</div>
+        </div>
+        <div class="card">
+            <div class="card-icon">⚡</div>
+            <div class="card-title">KULÜBE DESTEK</div>
+            <div class="card-body">Gelirin bir kısmı doğrudan kulüp etkinliklerine ve ekipmanlarına aktarılacak.</div>
+        </div>
+    </div>
+</section>
+
+
+<section class="cta-section">
+    <div class="cta-box">
+        <div class="cta-title">Bize <span>Destek</span> Ol!</div>
+        <p class="cta-sub">
+            Tasarımlar onaylandığında haberdar olmak için bize ulaş.<br>
+            YUSİBER topluluğunun bir parçası ol.
+        </p>
+        <a href="mailto:yusiber@example.com" class="btn-primary">İLETİŞİME GEÇ</a>
+    </div>
+</section>
+
+
+<footer>
+    <div class="footer-logo">YUSİBER</div>
+    <div class="footer-copy">© 2025 YUSİBER SİBER GÜVENLİK KULÜBÜ — TÜM HAKLARI SAKLIDIR</div>
+</footer>
+
+<script>
+ 
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&YUSİBER';
+    const cols = Math.floor(window.innerWidth / 18);
+    const drops = Array(cols).fill(1);
+
+    setInterval(() => {
+        ctx.fillStyle = 'rgba(5,10,14,0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#00ffe7';
+        ctx.font = '14px Share Tech Mono, monospace';
+        drops.forEach((y, i) => {
+            const char = chars[Math.floor(Math.random() * chars.length)];
+            ctx.fillText(char, i * 18, y * 18);
+            if (y * 18 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        });
+    }, 55);
+
+    /* 7a 86 80 7a 6f 76 7f 58 4f 56 49 48 4a 7c 5a 4c 66 65 66 4f 56 55 52 5a 4a 57 55 4a 5f 5e*/
+    const target = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
+    const pad = n => String(n).padStart(2, '0');
+
+    setInterval(() => {
+        const diff = target - Date.now();
+        if (diff <= 0) return;
+        document.getElementById('days').textContent  = pad(Math.floor(diff / 86400000));
+        document.getElementById('hours').textContent = pad(Math.floor((diff % 86400000) / 3600000));
+        document.getElementById('mins').textContent  = pad(Math.floor((diff % 3600000) / 60000));
+        document.getElementById('secs').textContent  = pad(Math.floor((diff % 60000) / 1000));
+    }, 1000);
+</script>
+</body>
+</html>
